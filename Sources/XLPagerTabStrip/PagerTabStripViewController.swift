@@ -160,41 +160,29 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
             preCurrentIndex = index
             return
         }
+        var indexHelper = index
         
         if self.viewControllers[index].tabBarItem.tag == 987 {
             customProtocol?.openTabInFullScreen()
+            indexHelper = 0
         }
         
-        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
-        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        toastLabel.textColor = UIColor.white
-        toastLabel.font = .systemFont(ofSize: 12.0)
-        toastLabel.textAlignment = .center;
-        toastLabel.text = "\(self.viewControllers[index].tabBarItem.tag)"
-        toastLabel.alpha = 1.0
-        toastLabel.layer.cornerRadius = 10;
-        toastLabel.clipsToBounds  =  true
-        self.view.addSubview(toastLabel)
-        UIView.animate(withDuration: 4.0, delay: 0.1, options: .curveEaseOut, animations: {
-             toastLabel.alpha = 0.0
-        }, completion: {(isCompleted) in
-            toastLabel.removeFromSuperview()
-        })
-
-        if animated && pagerBehaviour.skipIntermediateViewControllers && abs(currentIndex - index) > 1 {
-            var tmpViewControllers = viewControllers
-            let currentChildVC = viewControllers[currentIndex]
-            let fromIndex = currentIndex < index ? index - 1 : index + 1
-            let fromChildVC = viewControllers[fromIndex]
-            tmpViewControllers[currentIndex] = fromChildVC
-            tmpViewControllers[fromIndex] = currentChildVC
-            pagerTabStripChildViewControllersForScrolling = tmpViewControllers
-            containerView.setContentOffset(CGPoint(x: pageOffsetForChild(at: fromIndex), y: 0), animated: false)
-            (navigationController?.view ?? view).isUserInteractionEnabled = !animated
-            containerView.setContentOffset(CGPoint(x: pageOffsetForChild(at: index), y: 0), animated: true)
-        } else {
-            (navigationController?.view ?? view).isUserInteractionEnabled = !animated
-            containerView.setContentOffset(CGPoint(x: pageOffsetForChild(at: index), y: 0), animated: animated)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            if animated && self.pagerBehaviour.skipIntermediateViewControllers && abs(self.currentIndex - indexHelper) > 1 {
+                var tmpViewControllers = self.viewControllers
+                let currentChildVC = self.viewControllers[self.currentIndex]
+                let fromIndex = self.currentIndex < indexHelper ? indexHelper - 1 : indexHelper + 1
+                let fromChildVC = self.viewControllers[fromIndex]
+                tmpViewControllers[self.currentIndex] = fromChildVC
+                tmpViewControllers[fromIndex] = currentChildVC
+                self.pagerTabStripChildViewControllersForScrolling = tmpViewControllers
+                self.containerView.setContentOffset(CGPoint(x: self.pageOffsetForChild(at: fromIndex), y: 0), animated: false)
+                (self.navigationController?.view ?? self.view).isUserInteractionEnabled = !animated
+                self.containerView.setContentOffset(CGPoint(x: self.pageOffsetForChild(at: indexHelper), y: 0), animated: true)
+            } else {
+                (self.navigationController?.view ?? self.view).isUserInteractionEnabled = !animated
+                self.containerView.setContentOffset(CGPoint(x: self.pageOffsetForChild(at: indexHelper), y: 0), animated: animated)
+            }
         }
     }
 
