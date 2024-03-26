@@ -68,7 +68,7 @@ public struct ButtonBarPagerTabStripSettings {
 open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, PagerTabStripDataSource, PagerTabStripIsProgressiveDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
 
     public var settings = ButtonBarPagerTabStripSettings()
-
+    public var hideLastCell: Bool = false
     public var buttonBarItemSpec: ButtonBarItemSpec<ButtonBarViewCell>!
 
     public var changeCurrentIndex: ((_ oldCell: ButtonBarViewCell?, _ newCell: ButtonBarViewCell?, _ animated: Bool) -> Void)?
@@ -312,7 +312,7 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
     // MARK: - UICollectionViewDataSource
 
     open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewControllers.count
+        return hideLastCell ? viewControllers.count - 1 : viewControllers.count
     }
 
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -368,7 +368,7 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
 
     private func calculateWidths() -> [CGFloat] {
         let flowLayout = buttonBarView.collectionViewLayout as! UICollectionViewFlowLayout // swiftlint:disable:this force_cast
-        let numberOfCells = viewControllers.count
+        let numberOfCells = hideLastCell ? viewControllers.count - 1 : viewControllers.count
 
         var minimumCellWidths = [CGFloat]()
         var collectionViewContentWidth: CGFloat = 0
