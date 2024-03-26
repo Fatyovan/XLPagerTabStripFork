@@ -206,25 +206,6 @@ open class BaseButtonBarPagerTabStripViewController<ButtonBarCellType: UICollect
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard indexPath.item != currentIndex else { return }
 
-        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
-        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        toastLabel.textColor = UIColor.white
-        toastLabel.font = .systemFont(ofSize: 12.0)
-        toastLabel.textAlignment = .center;
-        toastLabel.text = "\(self.viewControllers[indexPath.item].tabBarItem.tag)"
-        toastLabel.alpha = 1.0
-        toastLabel.layer.cornerRadius = 10;
-        toastLabel.clipsToBounds  =  true
-        self.view.addSubview(toastLabel)
-        UIView.animate(withDuration: 2.0, delay: 0.1, options: .curveEaseOut, animations: {
-             toastLabel.alpha = 0.0
-        }, completion: {(isCompleted) in
-            toastLabel.removeFromSuperview()
-        })
-        
-        if self.viewControllers[indexPath.item].tabBarItem.tag == 987 {
-            
-        } else {
             buttonBarView.moveTo(index: indexPath.item, animated: true, swipeDirection: .none, pagerScroll: .yes)
             shouldUpdateButtonBarView = false
 
@@ -240,7 +221,6 @@ open class BaseButtonBarPagerTabStripViewController<ButtonBarCellType: UICollect
                 }
             }
             moveToViewController(at: indexPath.item)
-        }
 
     }
 

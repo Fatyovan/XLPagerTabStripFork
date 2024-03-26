@@ -165,6 +165,7 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
         if self.viewControllers[index].tabBarItem.tag == 987 {
             customProtocol?.openTabInFullScreen()
             indexHelper = 0
+            
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
