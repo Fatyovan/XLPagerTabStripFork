@@ -164,7 +164,7 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
         
         if self.viewControllers[index].tabBarItem.tag == 987 {
             customProtocol?.openTabInFullScreen()
-            indexHelper = 0
+//            indexHelper = 0
             
         }
         
