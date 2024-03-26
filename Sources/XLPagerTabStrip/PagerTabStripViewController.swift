@@ -47,6 +47,9 @@ public protocol PagerTabStripDataSource: AnyObject {
 
     func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController]
     
+}
+
+public protocol PagerTabStripCustomProtocol: AnyObject {
     func openTabInFullScreen()
 }
 
@@ -58,7 +61,8 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
 
     open weak var delegate: PagerTabStripDelegate?
     open weak var datasource: PagerTabStripDataSource?
-
+    open weak var customProtocol: PagerTabStripCustomProtocol?
+    
     open var pagerBehaviour = PagerTabStripBehaviour.progressive(skipIntermediateViewControllers: true, elasticIndicatorLimit: true)
 
     open private(set) var viewControllers = [UIViewController]()
@@ -158,7 +162,7 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
         }
         
         if self.viewControllers[index].tabBarItem.tag == 987 {
-            datasource?.openTabInFullScreen()
+            customProtocol?.openTabInFullScreen()
         }
         
         let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
