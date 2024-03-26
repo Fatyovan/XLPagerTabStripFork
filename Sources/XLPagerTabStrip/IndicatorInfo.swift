@@ -34,7 +34,7 @@ public struct IndicatorInfo {
     public var userInfo: Any?
     
     public init(title: String?) {
-        self.title = "Ivan"
+        self.title = title
         self.accessibilityLabel = title
     }
     
