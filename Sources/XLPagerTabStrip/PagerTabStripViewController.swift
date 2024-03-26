@@ -160,29 +160,25 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
             preCurrentIndex = index
             return
         }
-        var indexHelper = index
         
         if self.viewControllers[index].tabBarItem.tag == 987 {
             customProtocol?.openTabInFullScreen()
-            indexHelper = 0
+        } else {
             
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            if animated && self.pagerBehaviour.skipIntermediateViewControllers && abs(self.currentIndex - indexHelper) > 1 {
+            if animated && self.pagerBehaviour.skipIntermediateViewControllers && abs(self.currentIndex - index) > 1 {
                 var tmpViewControllers = self.viewControllers
                 let currentChildVC = self.viewControllers[self.currentIndex]
-                let fromIndex = self.currentIndex < indexHelper ? indexHelper - 1 : indexHelper + 1
+                let fromIndex = self.currentIndex < index ? index - 1 : index + 1
                 let fromChildVC = self.viewControllers[fromIndex]
                 tmpViewControllers[self.currentIndex] = fromChildVC
                 tmpViewControllers[fromIndex] = currentChildVC
                 self.pagerTabStripChildViewControllersForScrolling = tmpViewControllers
                 self.containerView.setContentOffset(CGPoint(x: self.pageOffsetForChild(at: fromIndex), y: 0), animated: false)
                 (self.navigationController?.view ?? self.view).isUserInteractionEnabled = !animated
-                self.containerView.setContentOffset(CGPoint(x: self.pageOffsetForChild(at: indexHelper), y: 0), animated: true)
+                self.containerView.setContentOffset(CGPoint(x: self.pageOffsetForChild(at: index), y: 0), animated: true)
             } else {
                 (self.navigationController?.view ?? self.view).isUserInteractionEnabled = !animated
-                self.containerView.setContentOffset(CGPoint(x: self.pageOffsetForChild(at: indexHelper), y: 0), animated: animated)
+                self.containerView.setContentOffset(CGPoint(x: self.pageOffsetForChild(at: index), y: 0), animated: animated)
             }
         }
     }
