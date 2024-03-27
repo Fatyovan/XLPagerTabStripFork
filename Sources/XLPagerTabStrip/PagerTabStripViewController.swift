@@ -51,6 +51,7 @@ public protocol PagerTabStripDataSource: AnyObject {
 
 public protocol PagerTabStripCustomProtocol: AnyObject {
     func openTabInFullScreen()
+    func indexOfClickedTab(index: Int)
 }
 
 // MARK: PagerTabStripViewController
@@ -160,6 +161,8 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
             preCurrentIndex = index
             return
         }
+        
+        customProtocol?.indexOfClickedTab(index: index)
         
         if self.viewControllers[index].tabBarItem.tag == 987 {
             customProtocol?.openTabInFullScreen()
