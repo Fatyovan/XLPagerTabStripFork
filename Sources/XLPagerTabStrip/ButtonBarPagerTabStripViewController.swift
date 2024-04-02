@@ -287,6 +287,9 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
         guard let cellWidthValue = cachedCellWidths?[indexPath.row] else {
             fatalError("cachedCellWidths for \(indexPath.row) must not be nil")
         }
+        if hideLastCell && indexPath.row == 3 {
+            return CGSize(width: 0, height: collectionView.frame.size.height)
+        }
         return CGSize(width: cellWidthValue, height: collectionView.frame.size.height)
     }
 
@@ -320,7 +323,7 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
     // MARK: - UICollectionViewDataSource
 
     open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return hideLastCell ? viewControllers.count - 1 : viewControllers.count
+        return /*hideLastCell ? viewControllers.count - 1 :*/ viewControllers.count
     }
 
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
