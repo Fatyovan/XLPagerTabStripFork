@@ -59,6 +59,7 @@ public protocol PagerTabStripCustomProtocol: AnyObject {
 open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
 
     @IBOutlet weak public var containerView: UIScrollView!
+    
 
     open weak var delegate: PagerTabStripDelegate?
     open weak var datasource: PagerTabStripDataSource?
@@ -90,7 +91,8 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
         }
         return .none
     }
-
+    let aboveView = UIView()
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
         let conteinerViewAux = containerView ?? {
@@ -99,9 +101,26 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
             return containerView
         }()
         containerView = conteinerViewAux
+        
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        aboveView.translatesAutoresizingMaskIntoConstraints = false
+        
         if containerView.superview == nil {
             view.addSubview(containerView)
+            view.addSubview(aboveView)
         }
+        NSLayoutConstraint.activate([
+            aboveView.topAnchor.constraint(equalTo: view.topAnchor),
+            aboveView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            aboveView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            aboveView.heightAnchor.constraint(equalToConstant: 100) // Adjust height as needed
+        ])
+        NSLayoutConstraint.activate([
+            containerView.topAnchor.constraint(equalTo: aboveView.bottomAnchor),
+            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
         containerView.bounces = true
         containerView.alwaysBounceHorizontal = true
         containerView.alwaysBounceVertical = false
