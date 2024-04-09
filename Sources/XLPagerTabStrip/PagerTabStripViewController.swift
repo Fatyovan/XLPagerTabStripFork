@@ -92,7 +92,6 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
         return .none
     }
     public var aboveView = UIView()
-    public var aboveViewHeightConstraint: NSLayoutConstraint!
     public var scrollViewTopConstraint: NSLayoutConstraint!
     
     override open func viewDidLoad() {
@@ -109,23 +108,21 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
         
         if containerView.superview == nil {
             view.addSubview(containerView)
-            view.addSubview(aboveView)
+//            view.addSubview(aboveView)
         }
         
-        aboveViewHeightConstraint = aboveView.heightAnchor.constraint(equalToConstant: 0)
-        NSLayoutConstraint.activate([
-            aboveView.topAnchor.constraint(equalTo: view.topAnchor),
-            aboveView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            aboveView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            aboveViewHeightConstraint
-        ])
-        scrollViewTopConstraint = containerView.topAnchor.constraint(equalTo: aboveView.bottomAnchor)
-        NSLayoutConstraint.activate([
-            scrollViewTopConstraint,
-            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+//        NSLayoutConstraint.activate([
+//            aboveView.topAnchor.constraint(equalTo: view.topAnchor),
+//            aboveView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            aboveView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+//        ])
+//        scrollViewTopConstraint = containerView.topAnchor.constraint(equalTo: aboveView.bottomAnchor)
+//        NSLayoutConstraint.activate([
+//            scrollViewTopConstraint,
+//            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//            containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+//        ])
         containerView.bounces = true
         containerView.alwaysBounceHorizontal = true
         containerView.alwaysBounceVertical = false
@@ -176,18 +173,18 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
         updateIfNeeded()
     }
     
-   open func updateAboveViewHeight(newHeight: CGFloat) {
-        aboveViewHeightConstraint.constant = newHeight
-        view.layoutIfNeeded()
-        containerView.topAnchor.constraint(equalTo: aboveView.bottomAnchor).isActive = true
-    }
-    
-   open func updateAboveViewHeightV2(newHeight: CGFloat) {
-        aboveViewHeightConstraint.constant = newHeight
-        scrollViewTopConstraint.isActive = false
-        scrollViewTopConstraint = containerView.topAnchor.constraint(equalTo: aboveView.bottomAnchor)
-        scrollViewTopConstraint.isActive = true
-    }
+//   open func updateAboveViewHeight(newHeight: CGFloat) {
+//        aboveViewHeightConstraint.constant = newHeight
+//        view.layoutIfNeeded()
+//        containerView.topAnchor.constraint(equalTo: aboveView.bottomAnchor).isActive = true
+//    }
+//    
+//   open func updateAboveViewHeightV2(newHeight: CGFloat) {
+//        aboveViewHeightConstraint.constant = newHeight
+//        scrollViewTopConstraint.isActive = false
+//        scrollViewTopConstraint = containerView.topAnchor.constraint(equalTo: aboveView.bottomAnchor)
+//        scrollViewTopConstraint.isActive = true
+//    }
 
     open override var shouldAutomaticallyForwardAppearanceMethods: Bool {
         return false
