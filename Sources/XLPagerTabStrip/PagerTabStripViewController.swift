@@ -91,7 +91,8 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
         }
         return .none
     }
-   public var aboveView = UIView()
+    public var aboveView = UIView()
+    public var aboveViewHeightConstraint: NSLayoutConstraint!
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -109,11 +110,13 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
             view.addSubview(containerView)
             view.addSubview(aboveView)
         }
+        
+        aboveViewHeightConstraint = aboveView.heightAnchor.constraint(equalToConstant: 0)
         NSLayoutConstraint.activate([
             aboveView.topAnchor.constraint(equalTo: view.topAnchor),
             aboveView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             aboveView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            aboveView.heightAnchor.constraint(equalToConstant: 100) // Adjust height as needed
+            aboveViewHeightConstraint
         ])
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: aboveView.bottomAnchor),
