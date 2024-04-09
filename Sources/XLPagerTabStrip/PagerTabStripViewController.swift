@@ -176,13 +176,13 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
         updateIfNeeded()
     }
     
-    func updateAboveViewHeight(newHeight: CGFloat) {
+   open func updateAboveViewHeight(newHeight: CGFloat) {
         aboveViewHeightConstraint.constant = newHeight
         view.layoutIfNeeded()
         containerView.topAnchor.constraint(equalTo: aboveView.bottomAnchor).isActive = true
     }
     
-    func updateAboveViewHeightV2(newHeight: CGFloat) {
+   open func updateAboveViewHeightV2(newHeight: CGFloat) {
         aboveViewHeightConstraint.constant = newHeight
         scrollViewTopConstraint.isActive = false
         scrollViewTopConstraint = containerView.topAnchor.constraint(equalTo: aboveView.bottomAnchor)
