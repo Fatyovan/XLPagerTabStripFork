@@ -111,7 +111,7 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
             view.addSubview(aboveView)
         }
         
-        aboveViewHeightConstraint = aboveView.heightAnchor.constraint(equalToConstant: 0)
+        aboveViewHeightConstraint = aboveView.heightAnchor.constraint(equalToConstant: 50)
         NSLayoutConstraint.activate([
             aboveView.topAnchor.constraint(equalTo: view.topAnchor),
             aboveView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
