@@ -91,7 +91,7 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
         }
         return .none
     }
-    let aboveView = UIView()
+   public var aboveView = UIView()
     
     override open func viewDidLoad() {
         super.viewDidLoad()
