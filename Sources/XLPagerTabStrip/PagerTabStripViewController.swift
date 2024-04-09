@@ -93,6 +93,7 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
     }
     public var aboveView = UIView()
     public var aboveViewHeightConstraint: NSLayoutConstraint!
+    public var scrollViewTopConstraint: NSLayoutConstraint!
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -111,15 +112,16 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
             view.addSubview(aboveView)
         }
         
-        aboveViewHeightConstraint = aboveView.heightAnchor.constraint(equalToConstant: 50)
+        aboveViewHeightConstraint = aboveView.heightAnchor.constraint(equalToConstant: 0)
         NSLayoutConstraint.activate([
             aboveView.topAnchor.constraint(equalTo: view.topAnchor),
             aboveView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             aboveView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             aboveViewHeightConstraint
         ])
+        scrollViewTopConstraint = containerView.topAnchor.constraint(equalTo: aboveView.bottomAnchor)
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: aboveView.bottomAnchor),
+            scrollViewTopConstraint,
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
@@ -172,6 +174,19 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
     override open func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateIfNeeded()
+    }
+    
+    func updateAboveViewHeight(newHeight: CGFloat) {
+        aboveViewHeightConstraint.constant = newHeight
+        view.layoutIfNeeded()
+        containerView.topAnchor.constraint(equalTo: aboveView.bottomAnchor).isActive = true
+    }
+    
+    func updateAboveViewHeightV2(newHeight: CGFloat) {
+        aboveViewHeightConstraint.constant = newHeight
+        scrollViewTopConstraint.isActive = false
+        scrollViewTopConstraint = containerView.topAnchor.constraint(equalTo: aboveView.bottomAnchor)
+        scrollViewTopConstraint.isActive = true
     }
 
     open override var shouldAutomaticallyForwardAppearanceMethods: Bool {
