@@ -100,46 +100,6 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
         datasource = self
     }
     
-    public func setupHeaderView(){
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: buttonBarView.bounds.width, height: headerHeight))
-                
-                // Create the image view
-                let headerImageView = UIImageView(frame: headerView.bounds)
-                headerImageView.contentMode = .scaleAspectFill
-                headerImageView.clipsToBounds = true
-        if #available(iOS 13.0, *) {
-            headerImageView.image = UIImage(systemName: "clock")?.withRenderingMode(.alwaysOriginal)
-        } else {
-            // Fallback on earlier versions
-        }
-                
-                // Add the image view to the header view
-                headerView.addSubview(headerImageView)
-                
-                // Set the header view as the collection view's header
-        buttonBarView.addSubview(headerView)
-                self.headerView = headerView
-                self.headerImageView = headerImageView
-    }
-    
-   public func updateHeaderImageAndHeight(newImage: UIImage?, newHeight: CGFloat) {
-            guard let headerView = headerView, let headerImageView = headerImageView else {
-                return
-            }
-            
-            // Update the image view's image
-            headerImageView.image = newImage
-            
-            // Update the header view's height
-            headerView.frame.size.height = newHeight
-            
-            // Update the collection view's content inset to adjust for the new header height
-       buttonBarView.contentInset.top = newHeight
-            
-            // Invalidate the layout to reflect the changes
-       buttonBarView.collectionViewLayout.invalidateLayout()
-        }
-
     open override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -212,7 +172,6 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
             buttonBarView.register(ButtonBarViewCell.self, forCellWithReuseIdentifier:"Cell")
         }
         //-
-        setupHeaderView()
     }
 
     open override func viewWillAppear(_ animated: Bool) {
